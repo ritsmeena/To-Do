@@ -10,7 +10,8 @@ struct ContentView: View {
     @State private var todos: [TodoItem] = ["Sample Task 1", "Sample Task 2","Sample Task 3","Sample Task 4","Sample Task 5","Sample Task 6","Sample Task 7","Sample Task 8","Sample Task 9","Sample Task 10","Sample Task 1", "Sample Task 2","Sample Task 3","Sample Task 4","Sample Task 5","Sample Task 6","Sample Task 7","Sample Task 8","Sample Task 9","Sample Task 10","Sample Task 1", "Sample Task 2","Sample Task 3","Sample Task 4","Sample Task 5","Sample Task 6","Sample Task 7","Sample Task 8","Sample Task 9","Sample Task 10"].map { TodoItem(name: $0, isChecked: false) }
     @State private var showSheet = false
     @State private var selectedTodoIndex: Int?
-    
+    @State private var hideDone = false
+
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
@@ -31,16 +32,18 @@ struct ContentView: View {
                     }
                     .listRowInsets(EdgeInsets())
                     
-                    Section(header: Text("Done (\(todos.filter { $0.isChecked }.count))")){
-                        ForEach(todos.indices.filter { todos[$0].isChecked }, id: \.self) { index in
-                            TodoItemView(todo: $todos[index], index: index, onSelect: { index in
-                                selectedTodoIndex = index
-                                showSheet.toggle()
-                            })
-                            
+                    if !hideDone{
+                        Section(header: Text("Done (\(todos.filter { $0.isChecked }.count))")){
+                            ForEach(todos.indices.filter { todos[$0].isChecked }, id: \.self) { index in
+                                TodoItemView(todo: $todos[index], index: index, onSelect: { index in
+                                    selectedTodoIndex = index
+                                    showSheet.toggle()
+                                })
+                                
+                            }
                         }
+                        .listRowInsets(EdgeInsets())
                     }
-                    .listRowInsets(EdgeInsets())
                 }
                 .padding(.horizontal, 20)
                 .listStyle(PlainListStyle())
@@ -53,8 +56,10 @@ struct ContentView: View {
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     Text("Edit")
                 })
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    Text("Hide Completed")
+                Button(action: {
+                    hideDone.toggle()
+                }, label: {
+                    Text(hideDone ? "Show completed" : "Hide completed")
                 })
             } label: {
                 Image(systemName: "ellipsis")

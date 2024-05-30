@@ -1,12 +1,22 @@
+//
+//  ScheduleReminder.swift
+//  To-Do
+//
+//  Created by Ritika Meena on 29/05/24.
+//
+
 import SwiftUI
 
 struct ScheduleReminder: View {
     @Binding var setReminder: Bool
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Date = Date()
-    @State private var dateIsSelected = false
+    @State private var dateIsSelected = true
     @State private var timeIsSelected = false
-    
+    @State private var Repeat: String = "Never"
+    @State private var alarmIsOn = false
+    @State private var repeatOptions = ["Never", "Every day", "Every week", "Every 2 weeks", "Every month", "Every year"]
+
     var body: some View {
         VStack {
             HStack {
@@ -16,13 +26,13 @@ struct ScheduleReminder: View {
                     Text("Cancel")
                         .foregroundColor(.yellow)
                 })
-                
+
                 Spacer()
-                
+
                 Text("Schedule Reminder")
-                
+
                 Spacer()
-                
+
                 Button(action: {
                     setReminder.toggle()
                 }, label: {
@@ -31,13 +41,13 @@ struct ScheduleReminder: View {
                 })
             }
             .padding()
-            
+
             VStack {
                 HStack {
                     Text("Remind me on")
-                    
+
                     Spacer()
-                    
+
                     Button(action: {
                         dateIsSelected.toggle()
                         if timeIsSelected {
@@ -50,9 +60,9 @@ struct ScheduleReminder: View {
                             .foregroundColor(dateIsSelected ? Color.white : Color.black)
                             .cornerRadius(8)
                     }
-                    
+
                     Spacer()
-                    
+
                     Button(action: {
                         timeIsSelected.toggle()
                         if dateIsSelected {
@@ -63,26 +73,59 @@ struct ScheduleReminder: View {
                             .padding()
                             .background(timeIsSelected ? Color.black : Color.gray.opacity(0.3))
                             .foregroundColor(timeIsSelected ? Color.white : Color.black)
-                            .cornerRadius(10)
-                    }
-                }
-                .padding()
-                
-                ViewThatFits {
-                    if dateIsSelected {
-                        DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
-                            .datePickerStyle(GraphicalDatePickerStyle())
-                            .padding(.horizontal)
-                            .cornerRadius(8)
-                    } else if timeIsSelected {
-                        DatePicker("Select Time", selection: $selectedTime, displayedComponents: .hourAndMinute)
-                            .datePickerStyle(WheelDatePickerStyle())
-                            .labelsHidden()
-                            .padding(.horizontal)
                             .cornerRadius(8)
                     }
                 }
                 .padding()
+
+                if dateIsSelected {
+                    DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
+                        .datePickerStyle(GraphicalDatePickerStyle())
+                        .padding(.horizontal)
+                } else if timeIsSelected {
+                    DatePicker("Select Time", selection: $selectedTime, displayedComponents: .hourAndMinute)
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .labelsHidden()
+                        .padding(.horizontal)
+                }
+
+                List {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Repeat")
+                                .foregroundColor(.black)
+                            Text("\(Repeat)")
+                                .foregroundColor(.yellow)
+                        }
+                        Spacer()
+                        Menu {
+                            ForEach(repeatOptions, id: \.self) { option in
+                                Button(action: {
+                                    Repeat = option
+                                }) {
+                                    Text(option)
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
+                        }
+                    }
+
+                    HStack {
+                        Text("Alarm")
+                        Spacer()
+                        Toggle(isOn: $alarmIsOn) {
+                            Text("")
+                        }
+                        .toggleStyle(SwitchToggleStyle(tint: .yellow))
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        alarmIsOn.toggle()
+                    }
+                }
+                .scrollDisabled(true)
             }
             .padding()
             .background(
@@ -93,13 +136,13 @@ struct ScheduleReminder: View {
         .background(Color.gray.opacity(0.1))
         .cornerRadius(8)
     }
-    
+
     private var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter.string(from: selectedDate)
     }
-    
+
     private var formattedTime: String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short

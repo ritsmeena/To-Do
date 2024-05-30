@@ -45,15 +45,18 @@ struct EditToDo: View {
             TextField("Edit to-do", text: $newTodoTextField)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
-            Button(action: {
-                setReminder.toggle()
-            }, label: {
-                Image(systemName: "bell")
-                    .foregroundColor(.black)
-            })
-            .frame(alignment: .leading)
+            
+            HStack {
+                Button(action: {
+                    setReminder.toggle()
+                }, label: {
+                    Image(systemName: "bell")
+                        .foregroundColor(.black)
+                })
+                Spacer() 
+            }
             .padding(.vertical)
-            .padding(.leading, 10)
+            .padding(.leading, 20)
         }
         .sheet(isPresented: $setReminder) {
             ScheduleReminder(setReminder: $setReminder)
