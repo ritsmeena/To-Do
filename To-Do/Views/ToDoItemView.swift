@@ -12,6 +12,7 @@ struct TodoItem: Identifiable {
     let id = UUID()
     var name: String
     var isChecked: Bool
+    var isDelete: Bool?
 }
 
 struct TodoItemView : View {
@@ -23,7 +24,7 @@ struct TodoItemView : View {
         Rectangle()
             .frame(height: 50)
             .foregroundColor(todo.isChecked ? Color.gray.opacity(0.1) : Color.yellow.opacity(0.1))
-            .cornerRadius(5)
+            .cornerRadius(8)
             .overlay(
                 HStack {
                     Spacer()
