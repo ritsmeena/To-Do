@@ -10,6 +10,7 @@
 		EF039DA92C089D7400AF3840 /* ToDoItemDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF039DA82C089D7400AF3840 /* ToDoItemDeleteView.swift */; };
 		EF039DAB2C08B05A00AF3840 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF039DAA2C08B05A00AF3840 /* ToDoListView.swift */; };
 		EF039DAF2C08B51A00AF3840 /* MenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF039DAE2C08B51A00AF3840 /* MenuContentView.swift */; };
+		EF06D6162C0CAF9200C99BF9 /* EmptyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF06D6152C0CAF9200C99BF9 /* EmptyListView.swift */; };
 		EF56F8B82C07079A00670D0D /* ToDoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF56F8B72C07079A00670D0D /* ToDoItemView.swift */; };
 		EF56F8BB2C07084200670D0D /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF56F8BA2C07084200670D0D /* CheckboxToggleStyle.swift */; };
 		EF56F8BD2C070F3200670D0D /* ScheduleReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF56F8BC2C070F3200670D0D /* ScheduleReminder.swift */; };
@@ -24,6 +25,7 @@
 		EF039DA82C089D7400AF3840 /* ToDoItemDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemDeleteView.swift; sourceTree = "<group>"; };
 		EF039DAA2C08B05A00AF3840 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
 		EF039DAE2C08B51A00AF3840 /* MenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentView.swift; sourceTree = "<group>"; };
+		EF06D6152C0CAF9200C99BF9 /* EmptyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyListView.swift; sourceTree = "<group>"; };
 		EF56F8B72C07079A00670D0D /* ToDoItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItemView.swift; sourceTree = "<group>"; };
 		EF56F8BA2C07084200670D0D /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		EF56F8BC2C070F3200670D0D /* ScheduleReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleReminder.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 				EF039DA82C089D7400AF3840 /* ToDoItemDeleteView.swift */,
 				EF039DAA2C08B05A00AF3840 /* ToDoListView.swift */,
 				EF039DAE2C08B51A00AF3840 /* MenuContentView.swift */,
+				EF06D6152C0CAF9200C99BF9 /* EmptyListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 				EF56F8BB2C07084200670D0D /* CheckboxToggleStyle.swift in Sources */,
 				EF039DAB2C08B05A00AF3840 /* ToDoListView.swift in Sources */,
 				EF039DAF2C08B51A00AF3840 /* MenuContentView.swift in Sources */,
+				EF06D6162C0CAF9200C99BF9 /* EmptyListView.swift in Sources */,
 				EF039DA92C089D7400AF3840 /* ToDoItemDeleteView.swift in Sources */,
 				EF56F8BD2C070F3200670D0D /* ScheduleReminder.swift in Sources */,
 				EF56F8B82C07079A00670D0D /* ToDoItemView.swift in Sources */,

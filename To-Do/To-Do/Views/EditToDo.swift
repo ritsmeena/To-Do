@@ -10,31 +10,39 @@ import SwiftUI
 
 struct EditToDo: View {
     
+    @Binding var todos: [TodoItem]
     @Binding var showEdit: Bool
-    @Binding var newTodo: String
+    @Binding private var selectedTodoIndex: Int?
     @State private var setReminder = false
     @State private var newTodoTextField: String = ""
     
-    init(showEdit: Binding<Bool>, newTodo: Binding<String>) {
-        _showEdit = showEdit
-        _newTodo = newTodo
-        _newTodoTextField = State(initialValue: newTodo.wrappedValue)
+    init(todos: Binding<[TodoItem]>, showEdit: Binding<Bool>, selectedTodoIndex: Binding<Int?>) {
+        self._todos = todos
+        self._showEdit = showEdit
+        self._selectedTodoIndex = selectedTodoIndex
     }
     
     var body: some View{
         VStack{
             HStack{
                 Button(action: {
+                    if (todos[selectedTodoIndex!].name == "") && (newTodoTextField == "") {
+                        todos.remove(at: selectedTodoIndex!)
+                    }
                     showEdit.toggle()
                 }, label: {
                     Text("Cancel")
                         .foregroundColor(.yellow)
                 })
                 Spacer()
-                Text("Edit To-Do")
+                Text(selectedTodoIndex != nil ? "Edit To-Do" : "New to-do")
                 Spacer()
                 Button(action: {
-                    newTodo = newTodoTextField
+                    if newTodoTextField == ""{
+                        todos.remove(at: selectedTodoIndex!)
+                    }else {
+                        todos[selectedTodoIndex!].name = newTodoTextField
+                    }
                     showEdit.toggle()
                 }, label: {
                     Text("Save")
@@ -42,7 +50,7 @@ struct EditToDo: View {
                 })
             }
             .padding()
-            TextField("Edit to-do", text: $newTodoTextField)
+            TextField("New to-do", text: $newTodoTextField)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
             
@@ -53,14 +61,19 @@ struct EditToDo: View {
                     Image(systemName: "bell")
                         .foregroundColor(.black)
                 })
-                Spacer() 
+                Spacer()
             }
             .padding(.vertical)
             .padding(.leading, 20)
         }
+        .onAppear {
+            if let index = selectedTodoIndex, index < todos.count {
+                newTodoTextField = todos[index].name
+            }
+        }
         .sheet(isPresented: $setReminder) {
             ScheduleReminder(setReminder: $setReminder)
-                    .presentationDetents([.fraction(0.8)])
+                .presentationDetents([.fraction(0.8)])
         }
     }
 }

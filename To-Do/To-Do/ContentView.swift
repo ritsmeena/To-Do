@@ -26,7 +26,13 @@ struct ContentView: View {
                     Spacer()
                 }
                 
-                ToDoListView(todos: $todos, onEdit: $onEdit, selectedTodoIndex: $selectedTodoIndex, showSheet: $showSheet, hideDone: $hideDone)
+                
+                if todos.count > 0{
+                    ToDoListView(todos: $todos, onEdit: $onEdit, selectedTodoIndex: $selectedTodoIndex, showSheet: $showSheet, hideDone: $hideDone)
+                } else{
+                    EmptyFileView(animationFileName: "EmptyList")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
                 
             }
             .navigationTitle(onEdit ? "Select items" : "To-dos")
@@ -67,7 +73,8 @@ struct ContentView: View {
                 Group {
                     if !onEdit {
                         Button(action: {
-                            selectedTodoIndex = nil
+                            todos.append(newToDo)
+                            selectedTodoIndex = todos.count - 1
                             showSheet.toggle()
                         }) {
                             Circle()
@@ -87,17 +94,11 @@ struct ContentView: View {
             )
             .sheet(isPresented: $showSheet) {
                 if let selectedTodoIndex = selectedTodoIndex {
-                    EditToDo(showEdit: $showSheet, newTodo: $todos[selectedTodoIndex].name)
+                    EditToDo(todos: $todos, showEdit: $showSheet, selectedTodoIndex: $selectedTodoIndex)
                         .presentationDetents([.fraction(0.3)])
                 } else {
-                    EditToDo(showEdit: $showSheet, newTodo: $newToDo.name)
+                    EditToDo(todos: $todos,showEdit: $showSheet, selectedTodoIndex: $selectedTodoIndex)
                         .presentationDetents([.fraction(0.3)])
-                        .onDisappear {
-                            if !newToDo.name.isEmpty {
-                                todos.append(newToDo)
-                            }
-                            newToDo = TodoItem(name: "", isChecked: false)
-                        }
                 }
             }
             .toolbar {
