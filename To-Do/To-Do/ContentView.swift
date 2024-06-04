@@ -26,13 +26,12 @@ struct ContentView: View {
                     Spacer()
                 }
                 
-                
-                if todos.count > 0{
-                    ToDoListView(todos: $todos, onEdit: $onEdit, selectedTodoIndex: $selectedTodoIndex, showSheet: $showSheet, hideDone: $hideDone)
-                } else{
-                    EmptyFileView(animationFileName: "EmptyList")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
+                if todos.isEmpty || (todos.allSatisfy({ $0.isChecked }) && hideDone){
+                        EmptyFileView(animationFileName: "EmptyList")
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        ToDoListView(todos: $todos, onEdit: $onEdit, selectedTodoIndex: $selectedTodoIndex, showSheet: $showSheet, hideDone: $hideDone)
+                    }
                 
             }
             .navigationTitle(onEdit ? "Select items" : "To-dos")
@@ -62,7 +61,7 @@ struct ContentView: View {
                             
                         }) {
                             Image(systemName: selectAllToEdit ? "checkmark.square.fill" : "square")
-                                .foregroundColor(selectAllToEdit ? .yellow : .gray)
+                                .foregroundColor(selectAllToEdit ? .accentColor : .gray)
                         }
                     } else {
                         MenuContentView(onEdit: $onEdit, hideDone: $hideDone)
@@ -79,7 +78,7 @@ struct ContentView: View {
                         }) {
                             Circle()
                                 .frame(width: 60, height: 60)
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.accentColor)
                                 .overlay(
                                     Image(systemName: "plus")
                                         .resizable()

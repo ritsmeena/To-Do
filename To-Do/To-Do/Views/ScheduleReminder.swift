@@ -24,7 +24,7 @@ struct ScheduleReminder: View {
                     setReminder.toggle()
                 }, label: {
                     Text("Cancel")
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.accentColor)
                 })
 
                 Spacer()
@@ -37,7 +37,7 @@ struct ScheduleReminder: View {
                     setReminder.toggle()
                 }, label: {
                     Text("Save")
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.accentColor)
                 })
             }
             .padding()
@@ -95,7 +95,7 @@ struct ScheduleReminder: View {
                             Text("Repeat")
                                 .foregroundColor(.black)
                             Text("\(Repeat)")
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.accentColor)
                         }
                         Spacer()
                         Menu {
@@ -118,7 +118,7 @@ struct ScheduleReminder: View {
                         Toggle(isOn: $alarmIsOn) {
                             Text("")
                         }
-                        .toggleStyle(SwitchToggleStyle(tint: .yellow))
+                        .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {

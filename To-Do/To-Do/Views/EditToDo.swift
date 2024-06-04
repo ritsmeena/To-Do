@@ -32,7 +32,7 @@ struct EditToDo: View {
                     showEdit.toggle()
                 }, label: {
                     Text("Cancel")
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.accentColor)
                 })
                 Spacer()
                 Text(selectedTodoIndex != nil ? "Edit To-Do" : "New to-do")
@@ -46,7 +46,7 @@ struct EditToDo: View {
                     showEdit.toggle()
                 }, label: {
                     Text("Save")
-                        .foregroundColor(.yellow)
+                        .foregroundColor(.accentColor)
                 })
             }
             .padding()

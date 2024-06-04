@@ -23,7 +23,7 @@ struct TodoItemView : View {
     var body: some View {
         Rectangle()
             .frame(height: 50)
-            .foregroundColor(todo.isChecked ? Color.gray.opacity(0.1) : Color.yellow.opacity(0.1))
+            .foregroundColor(todo.isChecked ? Color.gray.opacity(0.1) : Color.accentColor.opacity(0.1))
             .cornerRadius(8)
             .overlay(
                 HStack {

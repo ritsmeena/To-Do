@@ -15,7 +15,7 @@ struct ToDoItemDeleteView: View {
     var body: some View {
         Rectangle()
             .frame(height: 50)
-            .foregroundColor(todo.isChecked ?? false ? Color.gray.opacity(0.1) : Color.yellow.opacity(0.1))
+            .foregroundColor(todo.isChecked ?? false ? Color.gray.opacity(0.1) : Color.accentColor.opacity(0.1))
             .cornerRadius(8)
             .overlay(
                 HStack {
@@ -27,7 +27,7 @@ struct ToDoItemDeleteView: View {
                         todo.isDelete?.toggle()
                     }) {
                         Image(systemName: todo.isDelete ?? false ? "checkmark.square.fill" : "square")
-                            .foregroundColor(todo.isDelete ?? false ? .yellow : .gray)
+                            .foregroundColor(todo.isDelete ?? false ? .accentColor : .gray)
                     }
                     .frame(alignment: .trailing)
                     .padding(.trailing, 20)
