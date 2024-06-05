@@ -40,6 +40,8 @@ struct EditToDo: View {
                 Button(action: {
                     if newTodoTextField == ""{
                         todos.remove(at: selectedTodoIndex!)
+                    }else if selectedTodoIndex == nil {
+                        todos.append(TodoItem(name: newTodoTextField, isChecked: false))
                     }else {
                         todos[selectedTodoIndex!].name = newTodoTextField
                     }

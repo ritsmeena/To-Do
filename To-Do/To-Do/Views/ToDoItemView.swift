@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct TodoItem: Identifiable {
+struct TodoItem: Identifiable, Equatable {
     let id = UUID()
     var name: String
     var isChecked: Bool

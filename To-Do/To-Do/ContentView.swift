@@ -11,9 +11,9 @@ struct ContentView: View {
     @State private var showSheet = false
     @State private var selectedTodoIndex: Int?
     @State private var hideDone = false
-    @State private var newToDo = TodoItem(name: "", isChecked: false)
     @State private var onEdit = false
     @State private var selectAllToEdit = false
+    @State private var navTitleOnEdit = "To-Dos"
     
     var body: some View {
         NavigationView {
@@ -30,11 +30,11 @@ struct ContentView: View {
                         EmptyFileView(animationFileName: "EmptyList")
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
-                        ToDoListView(todos: $todos, onEdit: $onEdit, selectedTodoIndex: $selectedTodoIndex, showSheet: $showSheet, hideDone: $hideDone)
+                        ToDoListView(todos: $todos, onEdit: $onEdit, selectedTodoIndex: $selectedTodoIndex, showSheet: $showSheet, hideDone: $hideDone, navTitleOnEdit: $navTitleOnEdit)
                     }
                 
             }
-            .navigationTitle(onEdit ? "Select items" : "To-dos")
+            .navigationTitle(navTitleOnEdit)
             .navigationBarItems(
                 leading:
                     Group {
@@ -72,8 +72,7 @@ struct ContentView: View {
                 Group {
                     if !onEdit {
                         Button(action: {
-                            todos.append(newToDo)
-                            selectedTodoIndex = todos.count - 1
+                            selectedTodoIndex = nil
                             showSheet.toggle()
                         }) {
                             Circle()
