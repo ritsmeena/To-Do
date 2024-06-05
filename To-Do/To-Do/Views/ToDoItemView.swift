@@ -36,9 +36,9 @@ struct TodoItemView : View {
                     }
                     .toggleStyle(CheckboxToggleStyle())
                 }
-                .contentShape(Rectangle())
-                .onTapGesture {
+                    .contentShape(Rectangle())
+                    .onTapGesture {
                         onSelect(index)
-                })
+                    })
     }
 }

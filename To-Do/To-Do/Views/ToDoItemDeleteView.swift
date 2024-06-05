@@ -32,7 +32,7 @@ struct ToDoItemDeleteView: View {
                     .frame(alignment: .trailing)
                     .padding(.trailing, 20)
                 }
-                .contentShape(Rectangle())
+                    .contentShape(Rectangle())
             )
             .onTapGesture {
                 todo.isDelete?.toggle()

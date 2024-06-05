@@ -18,20 +18,20 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack(alignment: .leading) {
-                if !onEdit{
+                if onEdit || todos.isEmpty {
+                    Spacer()
+                }else {
                     Text("\(todos.count) to-dos")
                         .padding(.leading, 20)
                         .foregroundColor(Color.gray)
-                }else {
-                    Spacer()
                 }
                 
                 if todos.isEmpty || (todos.allSatisfy({ $0.isChecked }) && hideDone){
-                        EmptyFileView(animationFileName: "EmptyList")
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    } else {
-                        ToDoListView(todos: $todos, onEdit: $onEdit, selectedTodoIndex: $selectedTodoIndex, showSheet: $showSheet, hideDone: $hideDone, navTitleOnEdit: $navTitleOnEdit)
-                    }
+                    EmptyFileView(animationFileName: "EmptyList")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    ToDoListView(todos: $todos, onEdit: $onEdit, selectedTodoIndex: $selectedTodoIndex, showSheet: $showSheet, hideDone: $hideDone, navTitleOnEdit: $navTitleOnEdit)
+                }
                 
             }
             .navigationTitle(navTitleOnEdit)
@@ -42,8 +42,8 @@ struct ContentView: View {
                             Button(action: {
                                 onEdit = false
                             }) {
-                                Image(systemName: "xmark")
-                                    .foregroundColor(.gray)
+                                Text("Cancel")
+                                    .foregroundColor(.accentColor)
                             }
                         }
                     },
@@ -60,10 +60,10 @@ struct ContentView: View {
                             }
                             
                         }) {
-                            Image(systemName: selectAllToEdit ? "checkmark.square.fill" : "square")
-                                .foregroundColor(selectAllToEdit ? .accentColor : .gray)
+                            Text(selectAllToEdit ? "Deselect all" : "Select all")
+                                .foregroundColor(.accentColor)
                         }
-                    } else {
+                    } else if !todos.isEmpty{
                         MenuContentView(onEdit: $onEdit, hideDone: $hideDone)
                     }
                 }

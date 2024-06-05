@@ -59,14 +59,14 @@ struct ToDoListView : View{
             .listRowSeparator(.hidden)
         }
         .onAppear {
-                    updateNavTitle()
-                }
+            updateNavTitle()
+        }
         .onChange(of: todos){
-                    updateNavTitle()
-                }
+            updateNavTitle()
+        }
         .onChange(of: onEdit){
-                    updateNavTitle()
-                }
+            updateNavTitle()
+        }
         .onDisappear{
             updateNavTitle()
         }

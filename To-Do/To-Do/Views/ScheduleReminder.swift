@@ -16,7 +16,7 @@ struct ScheduleReminder: View {
     @State private var Repeat: String = "Never"
     @State private var alarmIsOn = false
     @State private var repeatOptions = ["Never", "Every day", "Every week", "Every 2 weeks", "Every month", "Every year"]
-
+    
     var body: some View {
         VStack {
             HStack {
@@ -26,13 +26,13 @@ struct ScheduleReminder: View {
                     Text("Cancel")
                         .foregroundColor(.accentColor)
                 })
-
+                
                 Spacer()
-
+                
                 Text("Schedule Reminder")
-
+                
                 Spacer()
-
+                
                 Button(action: {
                     setReminder.toggle()
                 }, label: {
@@ -41,13 +41,13 @@ struct ScheduleReminder: View {
                 })
             }
             .padding()
-
+            
             VStack {
                 HStack {
                     Text("Remind me on")
-
+                    
                     Spacer()
-
+                    
                     Button(action: {
                         dateIsSelected.toggle()
                         if timeIsSelected {
@@ -60,9 +60,9 @@ struct ScheduleReminder: View {
                             .foregroundColor(dateIsSelected ? Color.white : Color.black)
                             .cornerRadius(8)
                     }
-
+                    
                     Spacer()
-
+                    
                     Button(action: {
                         timeIsSelected.toggle()
                         if dateIsSelected {
@@ -77,7 +77,7 @@ struct ScheduleReminder: View {
                     }
                 }
                 .padding()
-
+                
                 if dateIsSelected {
                     DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
                         .datePickerStyle(GraphicalDatePickerStyle())
@@ -88,7 +88,7 @@ struct ScheduleReminder: View {
                         .labelsHidden()
                         .padding(.horizontal)
                 }
-
+                
                 List {
                     HStack {
                         VStack(alignment: .leading) {
@@ -111,7 +111,7 @@ struct ScheduleReminder: View {
                                 .foregroundColor(.gray)
                         }
                     }
-
+                    
                     HStack {
                         Text("Alarm")
                         Spacer()
@@ -136,13 +136,13 @@ struct ScheduleReminder: View {
         .background(Color.gray.opacity(0.1))
         .cornerRadius(8)
     }
-
+    
     private var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter.string(from: selectedDate)
     }
-
+    
     private var formattedTime: String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
