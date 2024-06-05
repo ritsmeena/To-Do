@@ -11,14 +11,19 @@ import SwiftUI
 struct MenuContentView : View{
     @Binding var onEdit: Bool
     @Binding var hideDone: Bool
+    @Binding var todos: [TodoItem]
     
     var body: some View{
         Menu {
-            Button(action: {
-                onEdit.toggle()
-            }, label: {
-                Text("Edit")
-            })
+            if todos.filter{$0.isChecked}.count == todos.count && hideDone{
+                
+            }else {
+                Button(action: {
+                    onEdit.toggle()
+                }, label: {
+                    Text("Edit")
+                })
+            }
             Button(action: {
                 hideDone.toggle()
             }, label: {
