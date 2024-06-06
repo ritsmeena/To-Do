@@ -19,122 +19,127 @@ struct ScheduleReminder: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    setReminder.toggle()
-                }, label: {
-                    Text("Cancel")
-                        .foregroundColor(.accentColor)
-                })
-                
-                Spacer()
-                
-                Text("Schedule Reminder")
-                
-                Spacer()
-                
-                Button(action: {
-                    setReminder.toggle()
-                }, label: {
-                    Text("Save")
-                        .foregroundColor(.accentColor)
-                })
-            }
-            .padding()
-            
             VStack {
                 HStack {
-                    Text("Remind me on")
+                    Button(action: {
+                        setReminder.toggle()
+                    }, label: {
+                        Text("Cancel")
+                            .foregroundColor(.accentColor)
+                    })
+                    
+                    Spacer()
+                    
+                    Text("Schedule Reminder")
                     
                     Spacer()
                     
                     Button(action: {
-                        dateIsSelected.toggle()
-                        if timeIsSelected {
-                            timeIsSelected = false
+                        setReminder.toggle()
+                    }, label: {
+                        Text("Save")
+                            .foregroundColor(.accentColor)
+                    })
+                }
+                .padding(.vertical)
+                
+                VStack {
+                    HStack {
+                        Text("Remind me on")
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            dateIsSelected.toggle()
+                            if timeIsSelected {
+                                timeIsSelected = false
+                            }
+                        }) {
+                            Text(formattedDate)
+                                .padding()
+                                .background(dateIsSelected ? Color.black : Color.gray.opacity(0.3))
+                                .foregroundColor(dateIsSelected ? Color.white : Color.black)
+                                .cornerRadius(8)
                         }
-                    }) {
-                        Text(formattedDate)
-                            .padding()
-                            .background(dateIsSelected ? Color.black : Color.gray.opacity(0.3))
-                            .foregroundColor(dateIsSelected ? Color.white : Color.black)
-                            .cornerRadius(8)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            timeIsSelected.toggle()
+                            if dateIsSelected {
+                                dateIsSelected = false
+                            }
+                        }) {
+                            Text(formattedTime)
+                                .padding()
+                                .background(timeIsSelected ? Color.black : Color.gray.opacity(0.3))
+                                .foregroundColor(timeIsSelected ? Color.white : Color.black)
+                                .cornerRadius(8)
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    if dateIsSelected {
+                        DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
+                            .datePickerStyle(GraphicalDatePickerStyle())
+                            .padding(.horizontal, 5)
+                    } else if timeIsSelected {
+                        DatePicker("Select Time", selection: $selectedTime, displayedComponents: .hourAndMinute)
+                            .datePickerStyle(WheelDatePickerStyle())
+                            .labelsHidden()
+                            .padding(.horizontal, 5)
                     }
                     
-                    Spacer()
-                    
-                    Button(action: {
-                        timeIsSelected.toggle()
-                        if dateIsSelected {
-                            dateIsSelected = false
+                    VStack(spacing: 16) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Repeat")
+                                    .foregroundColor(.black)
+                                Text("\(Repeat)")
+                                    .foregroundColor(.accentColor)
+                            }
+                            Spacer()
+                            Menu {
+                                ForEach(repeatOptions, id: \.self) { option in
+                                    Button(action: {
+                                        Repeat = option
+                                    }) {
+                                        Text(option)
+                                    }
+                                }
+                            } label: {
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
                         }
-                    }) {
-                        Text(formattedTime)
-                            .padding()
-                            .background(timeIsSelected ? Color.black : Color.gray.opacity(0.3))
-                            .foregroundColor(timeIsSelected ? Color.white : Color.black)
-                            .cornerRadius(8)
+                        
+                        HStack {
+                            Text("Alarm")
+                            Spacer()
+                            Toggle(isOn: $alarmIsOn) {
+                                Text("")
+                            }
+                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            alarmIsOn.toggle()
+                        }
                     }
+                    .padding(.horizontal)
                 }
                 .padding()
-                
-                if dateIsSelected {
-                    DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                        .padding(.horizontal)
-                } else if timeIsSelected {
-                    DatePicker("Select Time", selection: $selectedTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .labelsHidden()
-                        .padding(.horizontal)
-                }
-                
-                List {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Repeat")
-                                .foregroundColor(.black)
-                            Text("\(Repeat)")
-                                .foregroundColor(.accentColor)
-                        }
-                        Spacer()
-                        Menu {
-                            ForEach(repeatOptions, id: \.self) { option in
-                                Button(action: {
-                                    Repeat = option
-                                }) {
-                                    Text(option)
-                                }
-                            }
-                        } label: {
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.gray)
-                        }
-                    }
-                    
-                    HStack {
-                        Text("Alarm")
-                        Spacer()
-                        Toggle(isOn: $alarmIsOn) {
-                            Text("")
-                        }
-                        .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                    }
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        alarmIsOn.toggle()
-                    }
-                }
-                .scrollDisabled(true)
+                .background(
+                    Color.white
+                        .cornerRadius(8)
+                )
             }
             .padding()
-            .background(
-                Color.white
-                    .cornerRadius(8)
-            )
+            .background(Color.gray.opacity(0.1))
+            .cornerRadius(8)
+            
+            Spacer()
         }
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(8)
     }
     
     private var formattedDate: String {

@@ -77,7 +77,7 @@ struct EditToDo: View {
         }
         .sheet(isPresented: $setReminder) {
             ScheduleReminder(setReminder: $setReminder)
-                .presentationDetents([.fraction(0.8)])
+                .presentationDetents([.large])
         }
     }
 }
