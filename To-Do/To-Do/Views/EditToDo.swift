@@ -26,8 +26,10 @@ struct EditToDo: View {
         VStack{
             HStack{
                 Button(action: {
-                    if (todos[selectedTodoIndex!].name == "") && (newTodoTextField == "") {
-                        todos.remove(at: selectedTodoIndex!)
+                    if let selectedTodoIndex = selectedTodoIndex{
+                        if (todos[selectedTodoIndex].name == "") && (newTodoTextField == "") {
+                            todos.remove(at: selectedTodoIndex)
+                        }
                     }
                     showEdit.toggle()
                 }, label: {
