@@ -13,6 +13,11 @@ struct TodoItem: Identifiable, Equatable {
     var name: String
     var isChecked: Bool
     var isDelete: Bool?
+    var reminderDate : Date?
+    var reminderTime : Date?
+    var Repeat: String = "Never"
+    var alarmIsOn: Bool
+    
 }
 
 struct TodoItemView : View {

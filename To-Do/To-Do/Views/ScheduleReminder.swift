@@ -9,14 +9,17 @@ import SwiftUI
 
 struct ScheduleReminder: View {
     @Binding var setReminder: Bool
+    @Binding var repeatOption: String
+    @Binding var reminderDate: Date?
+    @Binding var reminderTime: Date?
+    @Binding var alarmIsOn: Bool
+
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Date = Date()
     @State private var dateIsSelected = true
     @State private var timeIsSelected = false
-    @State private var Repeat: String = "Never"
-    @State private var alarmIsOn = false
     @State private var repeatOptions = ["Never", "Every day", "Every week", "Every 2 weeks", "Every month", "Every year"]
-    
+
     var body: some View {
         VStack {
             VStack {
@@ -29,12 +32,14 @@ struct ScheduleReminder: View {
                     })
                     
                     Spacer()
-                    
+
                     Text("Schedule Reminder")
-                    
+
                     Spacer()
-                    
+
                     Button(action: {
+                        reminderDate = selectedDate
+                        reminderTime = selectedTime
                         setReminder.toggle()
                     }, label: {
                         Text("Save")
@@ -42,13 +47,13 @@ struct ScheduleReminder: View {
                     })
                 }
                 .padding(.vertical)
-                
+
                 VStack {
                     HStack {
                         Text("Remind me on")
-                        
+
                         Spacer()
-                        
+
                         Button(action: {
                             dateIsSelected.toggle()
                             if timeIsSelected {
@@ -56,14 +61,15 @@ struct ScheduleReminder: View {
                             }
                         }) {
                             Text(formattedDate)
+                                .frame(maxWidth: .infinity)
                                 .padding()
                                 .background(dateIsSelected ? Color.black : Color.gray.opacity(0.3))
                                 .foregroundColor(dateIsSelected ? Color.white : Color.black)
                                 .cornerRadius(8)
                         }
-                        
+
                         Spacer()
-                        
+
                         Button(action: {
                             timeIsSelected.toggle()
                             if dateIsSelected {
@@ -71,14 +77,14 @@ struct ScheduleReminder: View {
                             }
                         }) {
                             Text(formattedTime)
+                                .frame(maxWidth: .infinity)
                                 .padding()
                                 .background(timeIsSelected ? Color.black : Color.gray.opacity(0.3))
                                 .foregroundColor(timeIsSelected ? Color.white : Color.black)
                                 .cornerRadius(8)
                         }
                     }
-                    .padding(.horizontal)
-                    
+
                     if dateIsSelected {
                         DatePicker("Select Date", selection: $selectedDate, displayedComponents: [.date])
                             .datePickerStyle(GraphicalDatePickerStyle())
@@ -89,20 +95,20 @@ struct ScheduleReminder: View {
                             .labelsHidden()
                             .padding(.horizontal, 5)
                     }
-                    
+
                     VStack(spacing: 16) {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("Repeat")
                                     .foregroundColor(.black)
-                                Text("\(Repeat)")
+                                Text("\(repeatOption)")
                                     .foregroundColor(.accentColor)
                             }
                             Spacer()
                             Menu {
                                 ForEach(repeatOptions, id: \.self) { option in
                                     Button(action: {
-                                        Repeat = option
+                                        repeatOption = option
                                     }) {
                                         Text(option)
                                     }
@@ -112,7 +118,7 @@ struct ScheduleReminder: View {
                                     .foregroundColor(.gray)
                             }
                         }
-                        
+
                         HStack {
                             Text("Alarm")
                             Spacer()
@@ -137,17 +143,25 @@ struct ScheduleReminder: View {
             .padding()
             .background(Color.gray.opacity(0.1))
             .cornerRadius(8)
-            
+
             Spacer()
         }
+        .onAppear {
+            if let date = reminderDate {
+                selectedDate = date
+            }
+            if let time = reminderTime {
+                selectedTime = time
+            }
+        }
     }
-    
+
     private var formattedDate: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter.string(from: selectedDate)
     }
-    
+
     private var formattedTime: String {
         let formatter = DateFormatter()
         formatter.timeStyle = .short

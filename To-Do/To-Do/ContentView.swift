@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State public var todos: [TodoItem] = ["Sample Task 1", "Sample Task 2", "Sample Task 3", "Sample Task 4", "Sample Task 5", "Sample Task 6", "Sample Task 7", "Sample Task 8", "Sample Task 9", "Sample Task 10"].map { TodoItem(name: $0, isChecked: false, isDelete: false) }
+    @State public var todos: [TodoItem] = ["Sample Task 1", "Sample Task 2", "Sample Task 3", "Sample Task 4", "Sample Task 5", "Sample Task 6", "Sample Task 7", "Sample Task 8", "Sample Task 9", "Sample Task 10"].map { TodoItem(name: $0, isChecked: false, isDelete: false, reminderDate: nil, reminderTime: nil, Repeat: "Never", alarmIsOn: false) }
     @State private var showSheet = false
     @State private var selectedTodoIndex: Int?
     @State private var hideDone = false
